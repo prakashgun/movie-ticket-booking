@@ -26,7 +26,7 @@ class BookType extends AbstractType
             ->add('showTime', ChoiceType::class, array(
             'choices'  => array(
                 'Morning' => 'morning',
-                'Afternoon' => 'evening',
+                'Evening' => 'evening',
                 'Night' => 'night',
                 )
                 )
