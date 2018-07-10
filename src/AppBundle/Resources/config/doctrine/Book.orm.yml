@@ -1,0 +1,27 @@
+AppBundle\Entity\Book:
+    type: entity
+    table: null
+    repositoryClass: AppBundle\Repository\BookRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        seats:
+            type: integer
+        date:
+            type: string
+            length: 255
+        showTime:
+            type: string
+            length: 255
+            column: show_time
+    manyToOne:
+        user:
+            targetEntity: AppBundle\Entity\User
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+    lifecycleCallbacks: {  }
