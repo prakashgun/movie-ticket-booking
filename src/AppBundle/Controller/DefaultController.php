@@ -6,6 +6,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\User;
+use AppBundle\Entity\Book;
+use AppBundle\Form\BookType;
 
 class DefaultController extends Controller
 {
@@ -44,9 +46,23 @@ class DefaultController extends Controller
         $user = $this->getUser();
 
         if($user instanceof User){
-            dump("Start bookinh")            ;
+            $book = new Book();
+            $book->setUser($user);
+            $form = $this->createForm(BookType::class, $book);
 
-            return $this->render('default/index.html.twig');
+                $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $book = $form->getData();
+
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($book);
+                $entityManager->flush();
+
+            }
+
+            return $this->render('default/book.html.twig', ['form' => $form->createView()]);
 
         }else{
             return $this->redirect($this->generateUrl('fos_user_security_login'));
