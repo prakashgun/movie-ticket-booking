@@ -10,4 +10,15 @@ namespace AppBundle\Repository;
  */
 class BookRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function status($date, $showTime)
+	{
+		return $this->createQueryBuilder('b')
+            ->select('count(b.id)')
+            ->andWhere("b.date = :date")
+            ->andWhere("b.showTime = :showTime")
+            ->setParameter("date", $date)
+            ->setParameter("showTime", $showTime)
+            ->getQuery()
+            ->getSingleScalarResult();
+	}	
 }
